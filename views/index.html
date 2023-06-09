@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <title>base64tovedio</title>
+    <style>
+      * {
+        padding: 0px;
+        margin: 0px;
+      }
+      #mainDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background-color: aliceblue;
+      }
+      #innerDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 29px;
+        background-color: rgb(255, 255, 255);
+      }
+      textarea {
+        height: 250px;
+        width: 600px;
+        padding: 10px;
+        font-size: 15px;
+        color: gray;
+      }
+      button {
+        height: 30px;
+        width: 120px;
+        color: blue;
+        background: chocolate;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mainDiv">
+      <div id="innerDiv">
+        <textarea placeholder="Enter base64 value here" id="base64"></textarea>
+        <button type="button" onclick="hitApi()">Download vedio</button>
+      </div>
+    </div>
+    <script>
+      function hitApi() {
+        let text = document.getElementById('base64');
+        console.log(text.value);
+        console.log();
+        fetch(`/getvideo?data=${text.value}`);
+      }
+    </script>
+  </body>
+</html>
