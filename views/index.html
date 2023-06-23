@@ -47,11 +47,9 @@
     <div id="mainDiv">
       <div id="innerDiv">
         <textarea placeholder="Enter base64 value here" id="base64" onchange="disable()"></textarea>
-        <button type="button" onclick="hitApi()" id="button">Convert vedio</button>
+        <button type="button" onclick="hitApi()" id="button">Download vedio</button>
       </div>
-      <div id="downloadDiv">
-        <button type="button" id="download" style="visibility: hidden">Download vedio</button>
-      </div>
+     
     </div>
     <script>
       function hitApi() {
@@ -75,18 +73,8 @@
             document.body.removeChild(downloadlink);
           });
       }
-      function disable() {
-        console.log('Hello from disable ');
-        let text = document.getElementById('base64');
-        let button = document.getElementById('button');
-        console.log(text, text.value.length);
-        if (text.value.length > 0) {
-          button.disabled = false;
-        } else {
-          button.disabled = true;
-        }
-      }
-      disable();
+     
+      
     </script>
   </body>
 </html>
