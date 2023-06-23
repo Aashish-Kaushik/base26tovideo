@@ -18,6 +18,8 @@
         height: 100vh;
         width: 100vw;
         background-color: aliceblue;
+        flex-direction: column;
+        row-gap: 30px;
       }
       #innerDiv {
         display: flex;
@@ -44,17 +46,47 @@
   <body>
     <div id="mainDiv">
       <div id="innerDiv">
-        <textarea placeholder="Enter base64 value here" id="base64"></textarea>
-        <button type="button" onclick="hitApi()">Download vedio</button>
+        <textarea placeholder="Enter base64 value here" id="base64" onchange="disable()"></textarea>
+        <button type="button" onclick="hitApi()" id="button">Convert vedio</button>
+      </div>
+      <div id="downloadDiv">
+        <button type="button" id="download" style="visibility: hidden">Download vedio</button>
       </div>
     </div>
     <script>
       function hitApi() {
         let text = document.getElementById('base64');
-        console.log(text.value);
-        console.log();
-        fetch(`/getvideo?data=${text.value}`);
+        // console.log(text.value);
+        let response = fetch(`/getvideo`, {
+          method: 'POST',
+          body: JSON.stringify({ data: text.value }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((res) => res.blob())
+          .then((blob) => {
+            const downloadlink = document.createElement('a');
+            downloadlink.href = URL.createObjectURL(blob);
+            downloadlink.download = 'outputfile.mp4';
+            downloadlink.style.display = 'none';
+            document.body.appendChild(downloadlink);
+            downloadlink.click();
+            document.body.removeChild(downloadlink);
+          });
       }
+      function disable() {
+        console.log('Hello from disable ');
+        let text = document.getElementById('base64');
+        let button = document.getElementById('button');
+        console.log(text, text.value.length);
+        if (text.value.length > 0) {
+          button.disabled = false;
+        } else {
+          button.disabled = true;
+        }
+      }
+      disable();
     </script>
   </body>
 </html>
